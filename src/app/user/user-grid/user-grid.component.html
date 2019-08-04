@@ -1,0 +1,90 @@
+<div class="users-grid">
+  <div class="col-md-10">
+
+    <div class="user-actions">
+
+      <div class="users-action-container">
+        <div class="user-action-title">Email Address</div>
+        <button type="button" title="Add Email" (click)="openDialog()" mat-raised-button color="accent">Add Email</button>
+      </div>
+    </div>
+
+    <div class="user-grid-data-container">
+      <mat-card>
+        <div class="users-grid-main">
+
+          <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="position">
+              <mat-header-cell *matHeaderCellDef>Serial No.</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.position}}
+              </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef class="email-container">Email Address</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="email-container">
+                {{element.email}}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;">
+
+                <div class="material-icon-wrapper">
+                  <i class="material-icons" title="Edit" (click)="ShowHideModal()">edit</i>
+                  <i class="material-icons inactive" title="Delete" (click)="ShowHideModal()">delete_forever</i>
+                </div>
+
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" [formControl]="emailFormControl"
+             [errorStateMatcher]="matcher" autocomplete="off">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<!--<div class="row modalContainer">
+  <modal #addRemoveEmailModal>
+    <modal-header>
+      <div class="heading">
+        <h1>Are you sure you want to activate this User?</h1>
+      </div>
+    </modal-header>
+    <modal-content>
+      <div class="content-block">
+        <div class="button-container">
+          <input type="button" class="btn no" (click)="addRemoveEmailModal.close()"
+                 value="No" tabindex="1">
+          <input type="button" class="btn yes" tabindex="2" value="Yes">
+        </div>
+      </div>
+    </modal-content>
+    <modal-footer></modal-footer>
+  </modal>
+</div>-->

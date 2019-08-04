@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.mat-form-field-wrapper {
+  .mat-form-field-infix {
+    padding: .4375em 0;
+  }
+}
+.mat-form-field-appearance-legacy {
+  .mat-form-field-wrapper {
+    padding-bottom: 1.25em;
+  }
+}
+
+.mat-form-field-label-wrapper {
+  top: -.84375em;
+  padding-top: .84375em;
+}
+input.mat-input-element {
+  margin-top: -.0625em;
+}
+
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix::after, .mat-form-field.mat-form-field-invalid .mat-form-field-label, .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker, .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent {
+  color: #f44336;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.2925em) scale(.75) perspective(100px) translateZ(0.001px);
+}
+
+.mat-error {
+  display: block;
+  color: #f44336;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  bottom: 1.25em;
+  background-color: rgba(0,0,0,.42);
+}
+.mat-form-field.mat-focused .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+  opacity: 1;
+  transform: scaleX(1);
+  transition: transform .3s cubic-bezier(.25,.8,.25,1),opacity .1s cubic-bezier(.25,.8,.25,1),background-color .3s cubic-bezier(.25,.8,.25,1);
+}
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
+  background-color: #f44336;
+}
+.mat-form-field-subscript-wrapper {
+  font-size: 75%;
+  margin-top: .66666667em;
+  top: calc(100% - 1.79166667em);
+}
+.mat-form-field-appearance-legacy .mat-form-field-subscript-wrapper {
+  margin-top: .54166667em;
+  top: calc(100% - 1.66666667em);
+}

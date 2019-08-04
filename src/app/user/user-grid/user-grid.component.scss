@@ -1,0 +1,82 @@
+.users-grid {
+  width: 90%;
+  float: left;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
+  margin: 3% 5%;
+
+  .user-actions {
+    width: 100%;
+
+    .users-action-container {
+      align-content: center;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      padding: 15px 20px;
+      border-radius: 3px;
+      color: rgba(0, 0, 0, .54);
+      background: rgba(196, 196, 196, 0.5);
+      .user-action-title {
+        flex: 1 1 auto;
+        font-family: monospace;
+        font-size: 18px;
+      }
+      button {
+        background: indianred;
+        color: #fff;
+        font-family: monospace;
+        font-weight: bold;
+      }
+    }
+  }
+  .user-grid-data-container {
+    padding: 30px;
+    background-color: #fafafa;
+    .mat-card {
+      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+      padding: 0;
+      .users-grid-main {
+        width: 100%;
+        overflow-y: auto;
+        .mat-table {
+          width: 100%;
+          .mat-header-cell {
+            color: rgba(0, 0, 0, .54);
+            font-weight: bold;
+            font-family: monospace;
+          }
+          .mat-cell {
+            font-family: monospace;
+          }
+        }
+        .user-action {
+          cursor: pointer;
+          padding: 0 5px;
+        }
+        .active {
+          color: green;
+        }
+        .inactive {
+          color: #e51635;
+        }
+        .material-icon-wrapper {
+          i {
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 22px;
+          }
+        }
+      }
+    }
+  }
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+}
