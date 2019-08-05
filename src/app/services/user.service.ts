@@ -17,8 +17,8 @@ export class UserService {
   /**
    * To get All Email/
    */
-  getAll(): Observable<any> {
-   return this.http.get(this.baseURL + this.getAllEmailRoute, {});
+  getAllEmail(): Observable<any> {
+   return this.http.get(this.baseURL + this.getAllEmailRoute);
   }
 
   /**

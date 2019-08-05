@@ -25,8 +25,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 export class UserGridComponent implements OnInit {
   dataSource: TableElements[] = [
-    {position: 1, email: 'ravi'},
-    {position: 2, email: 'girish'}
+    {position: 1, email: 'ravi@xyz.com'},
+    {position: 2, email: 'ravi2@abc.com'}
   ];
 
   displayedColumns: string[] = [
@@ -41,7 +41,9 @@ export class UserGridComponent implements OnInit {
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
   @ViewChild('addRemoveEmailModal', {static: true}) addRemoveEmailModal: Modal;
+  @ViewChild('deleteEmailModal', {static: true}) deleteEmailModal: Modal;
   addNew: Boolean = false;
+
   constructor(
     private userService: UserService,
     private spinnerService: SpinnerService) {
@@ -55,7 +57,7 @@ export class UserGridComponent implements OnInit {
   fetchEmailList() {
     this.spinnerService.showSpinner.emit(true);
     this.userService
-      .getAll()
+      .getAllEmail()
       .subscribe(
         res => this.getAllEmailListSuccess(res),
         error => {
@@ -115,6 +117,14 @@ export class UserGridComponent implements OnInit {
       // Update new email
       console.log('in else');
     }
+  }
+
+  showDeleteModal() {
+    this.deleteEmailModal.open();
+  }
+
+  confirmDelete(emailDTO) {
+    console.log(emailDTO);
   }
 
 }

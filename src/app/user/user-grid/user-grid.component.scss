@@ -27,6 +27,7 @@
         color: #fff;
         font-family: monospace;
         font-weight: bold;
+        min-width: 150px;
       }
     }
   }
@@ -73,13 +74,43 @@
 }
 
 .modalContainer {
-  .example-form {
+  .heading {
+    padding: 10px 0;
+    h1 {
+      font-size: 21px;
+      font-family: monospace;
+    }
+    .delete-title {
+      font-size: 16px;
+    }
+  }
+  .email-input-form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
-    .example-full-width {
+    .full-width-input {
       width: 100%;
       display: block;
+    }
+  }
+  .modal-button-wrapper {
+    padding: 10px 0;
+    .cancel-btn {
+      font-family: monospace;
+      font-weight: bold;
+      background: rgba(196, 196, 196, 0.5);
+      min-width: 120px;
+    }
+    .save-btn {
+      float: right;
+      background: brown;
+      color: #fff;
+      font-family: monospace;
+      font-weight: bold;
+      min-width: 120px;
+    }
+    .yes-btn {
+      background: #4E6539;
     }
   }
 }
