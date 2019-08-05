@@ -1,5 +1,5 @@
 <div class="users-grid">
-  <div class="col-md-10">
+  <div class="col-md-12">
 
     <div class="user-actions">
 
@@ -35,8 +35,8 @@
               <mat-cell *matCellDef="let element; let i = index;">
 
                 <div class="material-icon-wrapper">
-                  <i class="material-icons" title="Edit" (click)="ShowHideModal()">edit</i>
-                  <i class="material-icons inactive" title="Delete" (click)="ShowHideModal()">delete_forever</i>
+                  <i class="material-icons" title="Edit" (click)="showHideModal(element)">edit</i>
+                  <i class="material-icons inactive" title="Delete" (click)="showHideModal(element)">delete_forever</i>
                 </div>
 
               </mat-cell>
@@ -53,38 +53,32 @@
 
 </div>
 
-
-<div class="">
-  <form class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email" [formControl]="emailFormControl"
-             [errorStateMatcher]="matcher" autocomplete="off">
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-  </form>
-</div>
-
-<!--<div class="row modalContainer">
-  <modal #addRemoveEmailModal>
+<div class="row modalContainer">
+  <modal #addRemoveEmailModal [closeOnOutsideClick]="false">
     <modal-header>
       <div class="heading">
-        <h1>Are you sure you want to activate this User?</h1>
+        <h1>{{addNew ? 'Add New Email' : 'Update Email'}}</h1>
       </div>
     </modal-header>
     <modal-content>
-      <div class="content-block">
-        <div class="button-container">
-          <input type="button" class="btn no" (click)="addRemoveEmailModal.close()"
-                 value="No" tabindex="1">
-          <input type="button" class="btn yes" tabindex="2" value="Yes">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email" [formControl]="emailFormControl"
+                 [errorStateMatcher]="matcher" autocomplete="off">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div>
+          <button (click)="addRemoveEmailModal.close()">Cancel</button>
+          <button (click)="saveEmail(emailFormControl.value)">Save</button>
         </div>
-      </div>
+      </form>
     </modal-content>
     <modal-footer></modal-footer>
   </modal>
-</div>-->
+</div>

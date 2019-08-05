@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 .mat-form-field-wrapper {
   .mat-form-field-infix {
@@ -53,4 +55,90 @@ input.mat-input-element {
 .mat-form-field-appearance-legacy .mat-form-field-subscript-wrapper {
   margin-top: .54166667em;
   top: calc(100% - 1.66666667em);
+}
+
+/*ngx Modal CSS*/
+.modal-header {
+  border: none;
+  padding: 10px 10px 0 15px;
+  font-size: 22px;
+  text-align: center;
+  display: block;
+}
+
+.modalHeader {
+  padding: 6px 0;
+}
+
+.modal-footer {
+  border: none;
+  padding: 0;
+}
+
+button.close {
+  float: right;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.7;
+  padding-bottom: 2px;
+  outline: none;
+}
+
+button.close:hover {
+  opacity: 0.9;
+  color: #000000;
+}
+
+.fade {
+  opacity: 1 !important;
+  background: rgba(0, 0, 0, 0.5);
+  padding-top: 20%;
+}
+
+h1 {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.modal-content {
+  margin-top: -10%;
+  color: #353535;
+  opacity: 1;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+  outline: 0;
+}
+
+.modal-body {
+  padding: 15px;
+  max-height: 400px;
+  overflow: auto;
+}
+.modal-backdrop {
+  background-color: transparent !important;
+}
+.modal-backdrop.fade {
+  z-index: -1;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+.fade {
+  padding-top: 10% !important;
+}
+
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
 }

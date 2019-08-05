@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserGridRoutingModule } from './user-grid-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { UserGridComponent } from './user-grid.component';
+import {ModalModule} from 'ngx-modal';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { UserGridComponent } from './user-grid.component';
   imports: [
     CommonModule,
     UserGridRoutingModule,
-    SharedModule
+    SharedModule,
+    ModalModule
   ]
 })
 export class UserGridModule { }
