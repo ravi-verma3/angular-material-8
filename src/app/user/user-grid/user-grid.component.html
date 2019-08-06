@@ -13,18 +13,18 @@
 
         <mat-table [dataSource]="dataSource" matSort>
 
-          <ng-container matColumnDef="position">
+          <ng-container matColumnDef="idtableEmail">
             <mat-header-cell *matHeaderCellDef>Serial No.</mat-header-cell>
             <mat-cell *matCellDef="let element">
-              {{element.position}}
+              {{element.idtableEmail}}
             </mat-cell>
           </ng-container>
 
 
-          <ng-container matColumnDef="email">
+          <ng-container matColumnDef="tableEmailEmailAddress">
             <mat-header-cell *matHeaderCellDef class="email-container">Email Address</mat-header-cell>
             <mat-cell *matCellDef="let element" class="email-container">
-              {{element.email}}
+              {{element.tableEmailEmailAddress}}
             </mat-cell>
           </ng-container>
 
@@ -34,7 +34,7 @@
 
               <div class="material-icon-wrapper">
                 <i class="material-icons" title="Edit" (click)="showHideModal(element)">edit</i>
-                <i class="material-icons inactive" title="Delete" (click)="showDeleteModal()">delete_forever</i>
+                <i class="material-icons inactive" title="Delete" (click)="showDeleteModal(element)">delete_forever</i>
               </div>
 
             </mat-cell>
@@ -50,7 +50,8 @@
 </div>
 
 <div class="row modalContainer">
-  <modal #addRemoveEmailModal [closeOnOutsideClick]="false">
+
+  <ngx-smart-modal #addRemoveEmailModal identifier="myModal">
     <modal-header>
       <div class="heading">
         <h1>{{addNew ? 'Add New Email' : 'Update Email'}}</h1>
@@ -71,17 +72,21 @@
 
         <div class="modal-button-wrapper">
           <button class="mat-raised-button cancel-btn" (click)="addRemoveEmailModal.close()">Cancel</button>
-          <button class="mat-raised-button save-btn" (click)="saveEmail(emailFormControl.value)">Save</button>
+          <button class="mat-raised-button save-btn" [ngClass]="{'disabled': emailFormControl.invalid}" [disabled]="emailFormControl.invalid" (click)="saveEmail(emailFormControl.value)">
+            {{addNew ? 'Save' : 'Update'}}
+          </button>
         </div>
       </form>
     </modal-content>
     <modal-footer></modal-footer>
-  </modal>
+  </ngx-smart-modal>
+
 </div>
 
 
 <div class="row modalContainer">
-  <modal #deleteEmailModal [closeOnOutsideClick]="false">
+
+  <ngx-smart-modal #deleteEmailModal identifier="myModal">
     <modal-header>
       <div class="heading">
         <h1 class="delete-title">Are you sure you want to delete this Email?</h1>
@@ -96,5 +101,6 @@
       </div>
     </modal-content>
     <modal-footer></modal-footer>
-  </modal>
+  </ngx-smart-modal>
+
 </div>

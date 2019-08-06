@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ErrorStateMatcher, MatDialog, MatTable} from '@angular/material';
+import {ErrorStateMatcher, MatDialog, MatSnackBar, MatTable} from '@angular/material';
 import {SpinnerService} from '../../services/spinner.service';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {Modal} from 'ngx-modal';
+import {NgxSmartModalService} from 'ngx-smart-modal';
 
 export interface TableElements {
   position: any;
@@ -24,14 +25,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 
 export class UserGridComponent implements OnInit {
-  dataSource: TableElements[] = [
-    {position: 1, email: 'ravi@xyz.com'},
-    {position: 2, email: 'ravi2@abc.com'}
-  ];
+  dataSource: TableElements[] = [];
 
   displayedColumns: string[] = [
-    'position',
-    'email',
+    'idtableEmail',
+    'tableEmailEmailAddress',
     'action'
   ];
   emailFormControl = new FormControl('', [
@@ -43,10 +41,13 @@ export class UserGridComponent implements OnInit {
   @ViewChild('addRemoveEmailModal', {static: true}) addRemoveEmailModal: Modal;
   @ViewChild('deleteEmailModal', {static: true}) deleteEmailModal: Modal;
   addNew: Boolean = false;
+  selectedEmail: any = {};
 
   constructor(
     private userService: UserService,
-    private spinnerService: SpinnerService) {
+    private spinnerService: SpinnerService,
+    private _snackBar: MatSnackBar,
+    public ngxSmartModalService: NgxSmartModalService) {
   }
 
   ngOnInit() {
@@ -67,27 +68,39 @@ export class UserGridComponent implements OnInit {
   }
 
   getAllEmailListSuccess(res) {
+    this.spinnerService.showSpinner.emit(false);
     if (res && res.length) {
-      console.log(res);
+      this.dataSource = [];
+      this.dataSource = res;
     }
   }
 
   addNewEmailSuccess(res) {
     this.spinnerService.showSpinner.emit(false);
+    if (res) {
+      this._snackBar.open('Email Added Successfully', 'Close', {duration: 3000});
+      this.addRemoveEmailModal.close();
+      this.fetchEmailList();
+    }
   }
 
   openDialog() {
     this.addNew = true;
-    this.emailFormControl.errors.email = false;
+    if (this.emailFormControl.errors && this.emailFormControl.errors.email) {
+      this.emailFormControl.errors.email = false;
+    }
     this.emailFormControl.reset();
     this.addRemoveEmailModal.open();
   }
 
   showHideModal(data) {
-    if (data && data.email) {
+    console.log(data);
+    if (data && data.tableEmailEmailAddress) {
+      this.selectedEmail = {};
+      this.selectedEmail = data;
       this.addNew = false;
       this.addRemoveEmailModal.open();
-      this.emailFormControl.setValue(data.email);
+      this.emailFormControl.setValue(data.tableEmailEmailAddress);
     }
   }
 
@@ -96,12 +109,11 @@ export class UserGridComponent implements OnInit {
    * @param value
    */
   saveEmail(value) {
+    let data;
+    this.spinnerService.showSpinner.emit(false);
     if (this.addNew) {
-      // Add new email
-      this.spinnerService.showSpinner.emit(true);
-      let data;
       data = {
-        tableEmailEmailAddress: 'ravi.verma+1@zyz.com',
+        tableEmailEmailAddress: value ? value : '',
         tableEmailValidate: true
       };
 
@@ -114,17 +126,56 @@ export class UserGridComponent implements OnInit {
           }
         );
     } else {
-      // Update new email
-      console.log('in else');
+      if (this.selectedEmail && this.selectedEmail.idtableEmail) {
+        data = {
+          tableEmailEmailAddress: value ? value : '',
+          tableEmailValidate: true
+        };
+        this.userService.updateEmail(this.selectedEmail.idtableEmail, data).subscribe(
+          res => this.updateEmailSuccess(res),
+          error => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
 
-  showDeleteModal() {
+  updateEmailSuccess(res) {
+    if (res) {
+      this._snackBar.open('Email Updated Successfully', 'Close', {duration: 3000});
+      this.addRemoveEmailModal.close();
+      this.fetchEmailList();
+    }
+  }
+
+  showDeleteModal(element) {
+
+    if (element) {
+      this.selectedEmail = {};
+      this.selectedEmail = element;
+    }
+    console.log(this.selectedEmail);
     this.deleteEmailModal.open();
   }
 
-  confirmDelete(emailDTO) {
-    console.log(emailDTO);
+  confirmDelete() {
+    this.spinnerService.showSpinner.emit(true);
+    this.userService.deleteEmail(this.selectedEmail.idtableEmail).subscribe(
+      res => this.deleteEmailSuccess(res),
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  deleteEmailSuccess(res) {
+    this.spinnerService.showSpinner.emit(false);
+    if (res) {
+      this._snackBar.open('Email Deleted Successfully', 'Close', {duration: 3000});
+      this.deleteEmailModal.close();
+      this.fetchEmailList();
+    }
   }
 
 }

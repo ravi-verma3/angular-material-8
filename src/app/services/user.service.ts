@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class UserService {
    * To get All Email/
    */
   getAllEmail(): Observable<any> {
-   return this.http.get(this.baseURL + this.getAllEmailRoute);
+    return this.http.get(this.baseURL + this.getAllEmailRoute);
   }
 
   /**
@@ -31,15 +31,15 @@ export class UserService {
   /**
    * To update existing email Id
    */
-  updateEmail(tableEmailId): Observable<any> {
-    return this.http.put(this.baseURL + this.getAllEmailRoute, tableEmailId);
+  updateEmail(tableEmailId, data): Observable<any> {
+    return this.http.put(this.baseURL + this.getAllEmailRoute + tableEmailId, data);
   }
 
   /**
    * To delete existing email Id
    */
   deleteEmail(tableEmailId): Observable<any> {
-    return this.http.delete(this.baseURL + this.getAllEmailRoute, tableEmailId);
+    return this.http.delete(this.baseURL + this.getAllEmailRoute + tableEmailId);
   }
 
 }

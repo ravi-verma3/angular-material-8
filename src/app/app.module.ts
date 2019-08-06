@@ -7,7 +7,8 @@ import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { SpinnerService } from './services/spinner.service';
+import { SpinnerModule } from './shared/spinner/spinner.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -18,10 +19,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SpinnerModule
   ],
   providers: [
-    UserService
+    UserService,
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,14 @@
+.app-spinner {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 999999;
+  background: #00000014;
+  .spinner-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+}
