@@ -2,7 +2,7 @@
   <div class="user-actions">
 
     <div class="users-action-container">
-      <div class="user-action-title">Email Address Lists</div>
+      <div class="user-action-title">Email Address List</div>
       <button type="button" title="Add Email" (click)="openDialog()" mat-raised-button color="accent">Add Email</button>
     </div>
   </div>
@@ -57,23 +57,24 @@
         <h4>{{addNew ? 'Add Email Address' : 'Update Email Address'}}</h4>
       </div>
     </div>
-    <form class="email-input-form">
+    <form class="email-input-form" [formGroup]="form">
       <div class="modal-content">
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="Email" [formControl]="emailFormControl"
+            <input matInput placeholder="Email" formControlName="emailFormControl"
                    [errorStateMatcher]="matcher" autocomplete="off">
-            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required') && emailFormControl.touched && emailFormControl.dirty">
-              Please enter a valid email address
+            <mat-error *ngIf="!form.get('emailFormControl').hasError('required') && form.get('emailFormControl').touched">
+              <strong>Please enter a valid email address</strong>
             </mat-error>
-            <mat-error *ngIf="emailFormControl.hasError('required') && emailFormControl.touched && emailFormControl.dirty">
+            <mat-error *ngIf="form.get('emailFormControl').hasError('required') && form.get('emailFormControl').touched">
               <strong>Please enter an email address.</strong>
             </mat-error>
           </mat-form-field>
       </div>
       <div class="modal-footer">
         <div class="modal-button-wrapper">
-          <button class="mat-raised-button cancel-btn" (click)="addRemoveEmailModal.close()">Cancel</button>
-          <button class="mat-raised-button save-btn" [ngClass]="{'disabled': emailFormControl.invalid}" [disabled]="emailFormControl.invalid" (click)="saveEmail(emailFormControl.value)">
+          <button type="button" class="mat-raised-button cancel-btn" (click)="addRemoveEmailModal.close()">Cancel</button>
+          <button type="submit" class="mat-raised-button save-btn" [ngClass]="{'disabled': form.invalid || !form.get('emailFormControl').value}" [disabled]="form.invalid || !form.get('emailFormControl').value"
+          (click)="saveEmail(form.value)">
             {{addNew ? 'Save' : 'Update'}}
           </button>
         </div>

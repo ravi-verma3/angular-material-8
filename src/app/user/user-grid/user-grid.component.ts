@@ -1,21 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ErrorStateMatcher, MatSnackBar, MatTable} from '@angular/material';
+import {MatSnackBar, MatTable} from '@angular/material';
 import {SpinnerService} from '../../services/spinner.service';
 import {UserService} from '../../services/user.service';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {NgxSmartModalService} from 'ngx-smart-modal';
 import {UserConstants} from '../../constant/app.constant';
+import {EmailValidator} from '../../shared/validator/email.validator';
 
-export interface TableElements {
-  position: any;
-  email: any;
-}
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 @Component({
   selector: 'app-user-grid',
@@ -25,18 +16,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 
 export class UserGridComponent implements OnInit {
-  dataSource: TableElements[] = [];
+  dataSource;
 
   displayedColumns: string[] = [
     'idtableEmail',
     'tableEmailEmailAddress',
     'action'
   ];
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
 
+  form = this.fb.group({
+    emailFormControl: ['', [Validators.required, EmailValidator.validate]],
+  });
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
   @ViewChild('addRemoveEmailModal', {static: true}) addRemoveEmailModal: NgxSmartModalService;
   @ViewChild('deleteEmailModal', {static: true}) deleteEmailModal: NgxSmartModalService;
@@ -47,8 +37,8 @@ export class UserGridComponent implements OnInit {
   constructor(
     private userService: UserService,
     private spinnerService: SpinnerService,
-    private _snackBar: MatSnackBar) {
-  }
+    private _snackBar: MatSnackBar,
+    private fb: FormBuilder) {}
 
   /**
    * Called automatically on init of component
@@ -87,10 +77,10 @@ export class UserGridComponent implements OnInit {
    */
   openDialog() {
     this.addNew = true;
-    if (this.emailFormControl.errors && this.emailFormControl.errors.email) {
-      this.emailFormControl.errors.email = false;
-    }
-    this.emailFormControl.reset();
+    this.form.reset();
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.get(key).setErrors(null) ;
+    });
     this.addRemoveEmailModal.open('myModal', true);
   }
 
@@ -100,11 +90,12 @@ export class UserGridComponent implements OnInit {
    */
   showHideModal(data) {
     if (data && data.tableEmailEmailAddress) {
+      this.form.reset();
       this.selectedEmail = {};
       this.selectedEmail = data;
       this.addNew = false;
       this.addRemoveEmailModal.open('myModal', true);
-      this.emailFormControl.setValue(data.tableEmailEmailAddress);
+      this.form.controls['emailFormControl'].setValue(data.tableEmailEmailAddress);
     }
   }
 
@@ -117,7 +108,7 @@ export class UserGridComponent implements OnInit {
     this.spinnerService.showSpinner.emit(false);
     if (this.addNew) {
       data = {
-        tableEmailEmailAddress: value ? value : '',
+        tableEmailEmailAddress: value.emailFormControl ? value.emailFormControl : '',
         tableEmailValidate: true
       };
 
@@ -132,7 +123,7 @@ export class UserGridComponent implements OnInit {
     } else {
       if (this.selectedEmail && this.selectedEmail.idtableEmail) {
         data = {
-          tableEmailEmailAddress: value ? value : '',
+          tableEmailEmailAddress: value.emailFormControl ? value.emailFormControl : '',
           tableEmailValidate: true
         };
         this.userService.updateEmail(this.selectedEmail.idtableEmail, data).subscribe(
