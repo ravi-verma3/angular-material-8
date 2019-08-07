@@ -7,17 +7,14 @@ import {NgxSmartModalService} from 'ngx-smart-modal';
 import {UserConstants} from '../../constant/app.constant';
 import {EmailValidator} from '../../shared/validator/email.validator';
 
-
 @Component({
   selector: 'app-user-grid',
   templateUrl: './user-grid.component.html',
   styleUrls: ['./user-grid.component.scss']
 })
 
-
 export class UserGridComponent implements OnInit {
   dataSource;
-
   displayedColumns: string[] = [
     'idtableEmail',
     'tableEmailEmailAddress',
@@ -111,7 +108,6 @@ export class UserGridComponent implements OnInit {
         tableEmailEmailAddress: value.emailFormControl ? value.emailFormControl : '',
         tableEmailValidate: true
       };
-
       this.userService
         .addNewEmail(data)
         .subscribe(

@@ -60,8 +60,7 @@
     <form class="email-input-form" [formGroup]="form">
       <div class="modal-content">
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="Email" formControlName="emailFormControl"
-                   [errorStateMatcher]="matcher" autocomplete="off">
+            <input matInput placeholder="Email" formControlName="emailFormControl" autocomplete="off">
             <mat-error *ngIf="!form.get('emailFormControl').hasError('required') && form.get('emailFormControl').touched">
               <strong>Please enter a valid email address</strong>
             </mat-error>
