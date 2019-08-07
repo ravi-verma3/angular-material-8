@@ -15,15 +15,16 @@
       justify-content: center;
       padding: 15px 20px;
       border-radius: 3px;
-      color: rgba(0, 0, 0, .54);
-      background: rgba(196, 196, 196, 0.5);
+      background: #435d7d;
+      font-weight: bold;
+      color: #fff;
       .user-action-title {
         flex: 1 1 auto;
         font-family: monospace;
         font-size: 18px;
       }
       button {
-        background: indianred;
+        background: #5cb85c;
         color: #fff;
         font-family: monospace;
         font-weight: bold;
@@ -32,7 +33,6 @@
     }
   }
   .user-grid-data-container {
-    padding: 30px;
     background-color: #fafafa;
     .mat-card {
       box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
@@ -43,12 +43,28 @@
         .mat-table {
           width: 100%;
           .mat-header-cell {
-            color: rgba(0, 0, 0, .54);
+            color: rgb(86, 103, 135);
             font-weight: bold;
+            font-size: 13px;
             font-family: monospace;
+            &:last-child {
+              justify-content: center;
+            }
           }
           .mat-cell {
+            color: rgb(86, 103, 135);
             font-family: monospace;
+            &:last-child {
+              justify-content: center;
+            }
+          }
+          mat-row {
+            &:nth-child(even) {
+              background-color: rgb(252, 252, 252);
+            }
+            &:hover {
+              background-color: rgb(245, 245, 245);
+            }
           }
         }
         .user-action {
@@ -64,7 +80,7 @@
         .material-icon-wrapper {
           i {
             cursor: pointer;
-            margin-left: 5px;
+            margin: 0 5px;
             font-size: 22px;
           }
         }
@@ -75,26 +91,28 @@
 
 .modalContainer {
   .heading {
-    padding: 10px 0;
-    h1 {
-      font-size: 21px;
-      font-family: monospace;
+    h4 {
+      font-size: 18px;
+      margin-bottom: 0;
+      display: inline-block;
+      color: #566787;
+      font-weight: bold;
     }
     .delete-title {
-      font-size: 16px;
+      font-size: 14px;
+      color: #566787;
     }
   }
   .email-input-form {
-    min-width: 150px;
-    max-width: 500px;
     width: 100%;
+    float: left;
     .full-width-input {
       width: 100%;
       display: block;
     }
   }
   .modal-button-wrapper {
-    padding: 10px 0;
+    width: 100%;
     .cancel-btn {
       font-family: monospace;
       font-weight: bold;
@@ -103,14 +121,50 @@
     }
     .save-btn {
       float: right;
-      background: brown;
+      background-color: #449d44;
       color: #fff;
       font-family: monospace;
       font-weight: bold;
       min-width: 120px;
     }
     .yes-btn {
-      background: #4E6539;
+      float: right;
+      color: #fff;
+      font-family: monospace;
+      font-weight: bold;
+      min-width: 120px;
+    }
+  }
+  .modal-header, .modal-content, .modal-footer {
+    padding: 20px 30px;
+    float: left;
+    width: 100%;
+  }
+  .modal-header {
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .modal-title {
+    display: inline-block;
+    font-size: 18px;
+    margin: 0;
+    line-height: 1.42857143;
+    color: rgb(86, 103, 135);
+    font-family: sans-serif;
+    font-weight: bold;
+  }
+  .modal-footer {
+    background: #ecf0f1;
+    .content-block {
+      width: 100%;
+    }
+  }
+  .cancel-btn {
+    background: #fff !important;
+  }
+  .yes-btn {
+    background-color: #d9534f;
+    &:hover {
+      background-color: #c9302c;
     }
   }
 }

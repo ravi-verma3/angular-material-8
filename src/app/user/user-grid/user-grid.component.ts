@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ErrorStateMatcher, MatDialog, MatSnackBar, MatTable} from '@angular/material';
+import {ErrorStateMatcher, MatSnackBar, MatTable} from '@angular/material';
 import {SpinnerService} from '../../services/spinner.service';
 import {UserService} from '../../services/user.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {Modal} from 'ngx-modal';
 import {NgxSmartModalService} from 'ngx-smart-modal';
+import {UserConstants} from '../../constant/app.constant';
 
 export interface TableElements {
   position: any;
@@ -38,35 +38,42 @@ export class UserGridComponent implements OnInit {
   ]);
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
-  @ViewChild('addRemoveEmailModal', {static: true}) addRemoveEmailModal: Modal;
-  @ViewChild('deleteEmailModal', {static: true}) deleteEmailModal: Modal;
+  @ViewChild('addRemoveEmailModal', {static: true}) addRemoveEmailModal: NgxSmartModalService;
+  @ViewChild('deleteEmailModal', {static: true}) deleteEmailModal: NgxSmartModalService;
+
   addNew: Boolean = false;
   selectedEmail: any = {};
 
   constructor(
     private userService: UserService,
     private spinnerService: SpinnerService,
-    private _snackBar: MatSnackBar,
-    public ngxSmartModalService: NgxSmartModalService) {
+    private _snackBar: MatSnackBar) {
   }
 
+  /**
+   * Called automatically on init of component
+   */
   ngOnInit() {
     this.fetchEmailList();
   }
 
-
+  /**
+   * To get ALL email
+   */
   fetchEmailList() {
     this.spinnerService.showSpinner.emit(true);
     this.userService
       .getAllEmail()
       .subscribe(
         res => this.getAllEmailListSuccess(res),
-        error => {
-          console.log(error);
-        }
+        error => {}
       );
   }
 
+  /**
+   * To get all email list success
+   * @param res
+   */
   getAllEmailListSuccess(res) {
     this.spinnerService.showSpinner.emit(false);
     if (res && res.length) {
@@ -75,37 +82,34 @@ export class UserGridComponent implements OnInit {
     }
   }
 
-  addNewEmailSuccess(res) {
-    this.spinnerService.showSpinner.emit(false);
-    if (res) {
-      this._snackBar.open('Email Added Successfully', 'Close', {duration: 3000});
-      this.addRemoveEmailModal.close();
-      this.fetchEmailList();
-    }
-  }
-
+  /**
+   * To open modal
+   */
   openDialog() {
     this.addNew = true;
     if (this.emailFormControl.errors && this.emailFormControl.errors.email) {
       this.emailFormControl.errors.email = false;
     }
     this.emailFormControl.reset();
-    this.addRemoveEmailModal.open();
+    this.addRemoveEmailModal.open('myModal', true);
   }
 
+  /**
+   * To show hide Modal
+   * @param data
+   */
   showHideModal(data) {
-    console.log(data);
     if (data && data.tableEmailEmailAddress) {
       this.selectedEmail = {};
       this.selectedEmail = data;
       this.addNew = false;
-      this.addRemoveEmailModal.open();
+      this.addRemoveEmailModal.open('myModal', true);
       this.emailFormControl.setValue(data.tableEmailEmailAddress);
     }
   }
 
   /**
-   * On save
+   * To add/update email
    * @param value
    */
   saveEmail(value) {
@@ -122,7 +126,7 @@ export class UserGridComponent implements OnInit {
         .subscribe(
           res => this.addNewEmailSuccess(res),
           error => {
-            console.log(error);
+            this._snackBar.open(UserConstants.ADD_EMAIL_ERROR, 'Close', {duration: 3000});
           }
         );
     } else {
@@ -134,46 +138,72 @@ export class UserGridComponent implements OnInit {
         this.userService.updateEmail(this.selectedEmail.idtableEmail, data).subscribe(
           res => this.updateEmailSuccess(res),
           error => {
-            console.log(error);
+            this._snackBar.open(UserConstants.UPDATE_EMAIL_ERROR, 'Close', {duration: 3000});
           }
         );
       }
     }
   }
 
-  updateEmailSuccess(res) {
+  /**
+   * To Add new Email
+   * @param res
+   */
+  addNewEmailSuccess(res) {
+    this.spinnerService.showSpinner.emit(false);
     if (res) {
-      this._snackBar.open('Email Updated Successfully', 'Close', {duration: 3000});
-      this.addRemoveEmailModal.close();
+      this._snackBar.open(UserConstants.ADD_EMAIL_SUCCESS, 'Close', {duration: 3000});
+      this.addRemoveEmailModal.close('myModal');
       this.fetchEmailList();
     }
   }
 
-  showDeleteModal(element) {
+  /**
+   * To update existing Email
+   * @param res
+   */
+  updateEmailSuccess(res) {
+    if (res) {
+      this._snackBar.open(UserConstants.UPDATE_EMAIL_SUCCESS, 'Close', {duration: 3000});
+      this.addRemoveEmailModal.close('myModal');
+      this.fetchEmailList();
+    }
+  }
 
+  /**
+   * To show delete Modal
+   * @param element
+   */
+  showDeleteModal(element) {
     if (element) {
       this.selectedEmail = {};
       this.selectedEmail = element;
     }
-    console.log(this.selectedEmail);
-    this.deleteEmailModal.open();
+    this.deleteEmailModal.open('myModal', true);
   }
 
+  /**
+   * To confirm email delete
+   */
   confirmDelete() {
     this.spinnerService.showSpinner.emit(true);
     this.userService.deleteEmail(this.selectedEmail.idtableEmail).subscribe(
       res => this.deleteEmailSuccess(res),
       error => {
-        console.log(error);
+        this._snackBar.open(UserConstants.DELETE_EMAIL_ERROR, 'Close', {duration: 3000});
       }
     );
   }
 
+  /**
+   * To get delete email success
+   * @param res
+   */
   deleteEmailSuccess(res) {
     this.spinnerService.showSpinner.emit(false);
     if (res) {
-      this._snackBar.open('Email Deleted Successfully', 'Close', {duration: 3000});
-      this.deleteEmailModal.close();
+      this._snackBar.open(UserConstants.DELETE_EMAIL_SUCCESS, 'Close', {duration: 3000});
+      this.deleteEmailModal.close('myModal');
       this.fetchEmailList();
     }
   }

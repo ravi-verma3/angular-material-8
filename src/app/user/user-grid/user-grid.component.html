@@ -2,7 +2,7 @@
   <div class="user-actions">
 
     <div class="users-action-container">
-      <div class="user-action-title">Email Address</div>
+      <div class="user-action-title">Email Address Lists</div>
       <button type="button" title="Add Email" (click)="openDialog()" mat-raised-button color="accent">Add Email</button>
     </div>
   </div>
@@ -52,33 +52,33 @@
 <div class="row modalContainer">
 
   <ngx-smart-modal #addRemoveEmailModal identifier="myModal">
-    <modal-header>
+    <div class="modal-header">
       <div class="heading">
-        <h1>{{addNew ? 'Add New Email' : 'Update Email'}}</h1>
+        <h4>{{addNew ? 'Add Email Address' : 'Update Email Address'}}</h4>
       </div>
-    </modal-header>
-    <modal-content>
-      <form class="email-input-form">
-        <mat-form-field class="full-width-input">
-          <input matInput placeholder="Email" [formControl]="emailFormControl"
-                 [errorStateMatcher]="matcher" autocomplete="off">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            <strong>Please enter an email address.</strong>
-          </mat-error>
-        </mat-form-field>
-
+    </div>
+    <form class="email-input-form">
+      <div class="modal-content">
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Email" [formControl]="emailFormControl"
+                   [errorStateMatcher]="matcher" autocomplete="off">
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required') && emailFormControl.touched && emailFormControl.dirty">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required') && emailFormControl.touched && emailFormControl.dirty">
+              <strong>Please enter an email address.</strong>
+            </mat-error>
+          </mat-form-field>
+      </div>
+      <div class="modal-footer">
         <div class="modal-button-wrapper">
           <button class="mat-raised-button cancel-btn" (click)="addRemoveEmailModal.close()">Cancel</button>
           <button class="mat-raised-button save-btn" [ngClass]="{'disabled': emailFormControl.invalid}" [disabled]="emailFormControl.invalid" (click)="saveEmail(emailFormControl.value)">
             {{addNew ? 'Save' : 'Update'}}
           </button>
         </div>
-      </form>
-    </modal-content>
-    <modal-footer></modal-footer>
+      </div>
+    </form>
   </ngx-smart-modal>
 
 </div>
@@ -87,20 +87,22 @@
 <div class="row modalContainer">
 
   <ngx-smart-modal #deleteEmailModal identifier="myModal">
-    <modal-header>
+    <div class="modal-header">
+      <h4 class="modal-title">Delete Email Address</h4>
+    </div>
+    <div class="modal-content">
       <div class="heading">
-        <h1 class="delete-title">Are you sure you want to delete this Email?</h1>
+        <h1 class="delete-title">Are you sure you want to delete this Email Address?</h1>
       </div>
-    </modal-header>
-    <modal-content>
+    </div>
+    <div class="modal-footer">
       <div class="content-block">
         <div class="modal-button-wrapper">
           <button class="mat-raised-button cancel-btn" (click)="deleteEmailModal.close()">No</button>
-          <button class="mat-raised-button save-btn yes-btn" (click)="confirmDelete()">Yes</button>
+          <button class="mat-raised-button yes-btn" (click)="confirmDelete()">Yes</button>
         </div>
       </div>
-    </modal-content>
-    <modal-footer></modal-footer>
+    </div>
   </ngx-smart-modal>
 
 </div>

@@ -104,17 +104,8 @@ h1 {
 }
 
 .modal-content {
-  margin-top: -10%;
-  color: #353535;
-  opacity: 1;
-  position: relative;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  background-clip: padding-box;
-  outline: 0;
+  border: none;
+  border-radius: 0;
 }
 
 .modal-body {
@@ -178,6 +169,10 @@ Modal SCSS
   max-width: 520px;
   margin: 0 auto;
   pointer-events: none;
+  @media only screen and (max-width: 767px) {
+    margin: 0 5%;
+    width: 90%;
+  }
 }
 .nsm-content {
   position: relative;
@@ -187,12 +182,12 @@ Modal SCSS
   background-clip: padding-box;
   background-color: #fff;
   border-radius: 2px;
-  padding: 1rem;
+  //padding: 1rem;
   box-shadow: 0 7px 8px -4px rgba(0,0,0,.2), 0 13px 19px 2px rgba(0,0,0,.14), 0 5px 24px 4px rgba(0,0,0,.12);
   outline: 0;
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
-  margin: 1.75rem auto auto;
+  margin: 6rem auto auto;
 }
 .nsm-dialog-btn-close {
   border: 0;
@@ -203,4 +198,8 @@ Modal SCSS
   right: 8px;
   font-size: 1.2em;
   cursor: pointer;
+  opacity: 0.3;
+  &:hover {
+    opacity: 1;
+  }
 }
